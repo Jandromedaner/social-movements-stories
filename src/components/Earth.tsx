@@ -1,0 +1,46 @@
+import React, { useMemo } from "react";
+import { useLoader } from "@react-three/fiber";
+import * as THREE from "three";
+
+const Earth = () => {
+  const texturesLoaded = useLoader(THREE.TextureLoader, [
+    "/img/00_earthmap8k.jpg",
+    "/img/01_earthbump1k.jpg",
+    "/img/02_earthspec1k.jpg",
+    "/img/03_earthlights8k.jpg",
+    "/img/EARTH_DISPLACE_42K_16BITS_preview.jpg",
+  ]);
+
+  const materialProps = useMemo(() => {
+    return {
+      map: texturesLoaded[0],
+      bumpMap: texturesLoaded[1],
+      bumpScale: 0.5,
+      // specularMap: texturesLoaded[2],
+      roughness: 0.5,
+      metalness: 0.1,
+      emissiveMap: texturesLoaded[3],
+      emissive: new THREE.Color(0x222222),
+      emissiveIntensity: 1,
+      displacementMap: texturesLoaded[4],
+      displacementScale: 0.05,
+    };
+  }, [texturesLoaded]);
+
+  const uniforms = useMemo(
+    () => ({
+      color: { value: new THREE.Color(0xff0000) },
+      time: { value: 0 },
+    }),
+    [],
+  );
+
+  return (
+    <mesh scale={[2, 2, 2]}>
+      <sphereGeometry args={[1, 64, 64]} />
+      <meshStandardMaterial {...materialProps} />
+    </mesh>
+  );
+};
+
+export default Earth;

@@ -2,14 +2,14 @@
 import dynamic from "next/dynamic";
 import React from "react";
 
-const ThreeSceneWithNoSSR = dynamic(() => import("../components/ThreeScene"), {
+const ThreeCanvas = dynamic(() => import("../components/ThreeScene"), {
   ssr: false,
 });
 
 function HomePage() {
   return (
     <div>
-      <ThreeSceneWithNoSSR />
+      <ThreeCanvas />
     </div>
   );
 }

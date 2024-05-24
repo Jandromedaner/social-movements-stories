@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useThree } from "@react-three/fiber";
 import { gsap } from "gsap";
 import { OrbitControls } from "@react-three/drei";
-import { useCameraAnimation } from "./useCameraAnimation";
 
 const CameraControl = ({
   isAnimating,

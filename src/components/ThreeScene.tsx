@@ -1,15 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { Canvas, useThree } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import Background from "./Background";
 import Earth from "./Earth";
-import Markers from "./Markers";
 import Lights from "./Lights";
 import OrbitControlsComponent from "./OrbitControlsComponent";
 import GlowMesh from "./GlowMesh";
 import Starfield from "./Starfield";
-import NavigationMenu from "./NavigationMenu";
 import CameraControl from "./CameraControl";
 import Popup from "./Popup";
 import CivilRightsMilestones from "./CivilRightsMilestones";

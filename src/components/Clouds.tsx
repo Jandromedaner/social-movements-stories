@@ -1,8 +1,9 @@
 import React, { useRef } from "react";
 import { useLoader, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+import { Mesh } from "three";
 
-const Clouds = () => {
+const Clouds: React.FC = () => {
   const cloudTexture = useLoader(
     THREE.TextureLoader,
     "/img/04_earthcloudmap8k.jpg",
@@ -11,7 +12,7 @@ const Clouds = () => {
     THREE.TextureLoader,
     "/img/05_earthcloudmaptrans.jpg",
   );
-  const meshRef = useRef();
+  const meshRef = useRef<Mesh>(null);
 
   useFrame(() => {
     // Rotate the cloud mesh about the y-axis
@@ -22,7 +23,7 @@ const Clouds = () => {
 
   return (
     <mesh ref={meshRef}>
-      <sphereGeometry args={[1.005, 64, 64]} />{" "}
+      <sphereGeometry args={[1.005, 32, 32]} />
       {/* Slightly larger than the Earth for a cloud layer */}
       <meshPhongMaterial
         map={cloudTexture}

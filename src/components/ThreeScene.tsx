@@ -7,6 +7,7 @@ import Earth from "./Earth";
 import Lights from "./Lights";
 import OrbitControlsComponent from "./OrbitControlsComponent";
 import GlowMesh from "./GlowMesh";
+import Clouds from "./Clouds";
 import Starfield from "./Starfield";
 import CameraControl from "./CameraControl";
 import Popup from "./Popup";
@@ -81,6 +82,7 @@ const ThreeScene: React.FC = () => {
         <OrbitControlsComponent isAnimating={isAnimating} />
         <Lights />
         <Earth />
+        <Clouds />
         <CameraControl
           fov={50}
           targetPosition={targetPosition}

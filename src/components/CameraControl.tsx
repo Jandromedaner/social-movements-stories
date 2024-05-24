@@ -4,11 +4,18 @@ import { useThree } from "@react-three/fiber";
 import { gsap } from "gsap";
 import { OrbitControls } from "@react-three/drei";
 
-const CameraControl = ({
-  isAnimating,
-  setIsAnimating,
+interface CamerControlProps {
+  fov: number;
+  targetPosition: { x: number; y: number; z: number } | null;
+  isAnimating: boolean;
+  setIsAnimating: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const CameraControl: React.FC<CamerControlProps> = ({
   fov,
   targetPosition,
+  isAnimating,
+  setIsAnimating,
 }) => {
   const { camera, gl } = useThree();
 

@@ -1,6 +1,18 @@
 import React from "react";
 
-const Popup = ({ isVisible, onClose, title, content }) => {
+interface PopupProps {
+  isVisible: boolean;
+  onClose: () => void;
+  title: string;
+  content: string;
+}
+
+const Popup: React.FC<PopupProps> = ({
+  isVisible,
+  onClose,
+  title,
+  content,
+}) => {
   return (
     <div className={`popup ${isVisible ? "visible" : ""}`}>
       <div className="popup-content">

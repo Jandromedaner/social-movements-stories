@@ -12,8 +12,14 @@ import CameraControl from "./CameraControl";
 import Popup from "./Popup";
 import CivilRightsMilestones from "./CivilRightsMilestones";
 
+interface TargetPosition {
+  x: number;
+  y: number;
+  z: number;
+}
+
 const ThreeScene = () => {
-  const [targetPosition, setTargetPosition] = useState(null);
+  const [targetPosition, setTargetPosition] = useState<TargetPosition | null>(null);
   const [showPopup, setShowPopup] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [popupTitle, setPopupTitle] = useState("");
@@ -26,7 +32,7 @@ const ThreeScene = () => {
     }
   };
 
-  const handleCameraMove = (lat, lon, alt, title, content) => {
+  const handleCameraMove = (lat: number, lon: number, alt: number, title: string, content: string) => {
     console.log("Camera move initiated");
     setIsAnimating(true);
     const phi = (90 - lat) * (Math.PI / 180);
@@ -40,7 +46,7 @@ const ThreeScene = () => {
     setShowPopup(true);
   };
 
-  const handleMilestoneClick = (milestone) => {
+  const handleMilestoneClick = (milestone: { coordinates: { lat: number, lng: number }; title: string, content: string}) => {
     console.log("Milestone clicked:", milestone.title);
     handleCameraMove(
       milestone.coordinates.lat,

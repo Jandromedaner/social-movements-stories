@@ -1,11 +1,17 @@
 import React, { useRef } from "react";
 import { useThree, useFrame } from "@react-three/fiber";
-import * as THREE from "three";
+import {
+  Mesh,
+  ShaderMaterial,
+  Color,
+  AdditiveBlending,
+  FrontSide,
+} from "three";
 
 const GlowMesh = () => {
   const { camera } = useThree();
-  const meshRef = useRef();
-  const material = new THREE.ShaderMaterial({
+  const meshRef = useRef<Mesh>(null);
+  const material = new ShaderMaterial({
     uniforms: {
       // color1: { value: new THREE.Color(0x67b8ff) },
       // color2: { value: new THREE.Color(0x000000) },
@@ -13,7 +19,7 @@ const GlowMesh = () => {
       fresnelScale: { value: 0.5 },
       fresnelPower: { value: 2.0 },
       viewVector: { value: camera.position },
-      glowColor: { value: new THREE.Color(0x00aaff) },
+      glowColor: { value: new Color(0x00aaff) },
     },
     vertexShader: `
             uniform vec3 viewVector;
@@ -37,8 +43,8 @@ const GlowMesh = () => {
                 gl_FragColor = vec4(glowColor, 1.0) * vReflectionFactor;
             }
         `,
-    blending: THREE.AdditiveBlending,
-    side: THREE.FrontSide,
+    blending: AdditiveBlending,
+    side: FrontSide,
     depthTest: false,
     transparent: true,
   });

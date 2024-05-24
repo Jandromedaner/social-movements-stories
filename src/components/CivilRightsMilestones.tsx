@@ -1,6 +1,19 @@
 import React, { useState } from "react";
 
-const milestones = [
+interface Milestone {
+  title: string;
+  description: string;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
+}
+
+interface CivilRightsMilestonesProps {
+  onMilestoneClick: (milestone: Milestone) => void;
+}
+
+const milestones: Milestone[] = [
   {
     title: "The Supreme Court Declares Bus Segregation Unconstitutional (1956)",
     description:
@@ -93,7 +106,9 @@ const milestones = [
   },
 ];
 
-const CivilRightsMilestones = ({ onMilestoneClick }) => {
+const CivilRightsMilestones: React.FC<CivilRightsMilestonesProps> = ({
+  onMilestoneClick,
+}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = () => {

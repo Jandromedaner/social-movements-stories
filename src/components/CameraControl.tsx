@@ -20,7 +20,8 @@ const CameraControl: React.FC<CamerControlProps> = ({
   const { camera, gl } = useThree();
 
   useEffect(() => {
-    camera.fov = fov;
+  if ((camera as PerspectiveCamera).isPerspectiveCamera) {
+    (camera as PerspectiveCamera).fov = fov;
     camera.updateProjectionMatrix();
 
     if (targetPosition && isAnimating) {

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useThree } from "@react-three/fiber";
 import { gsap } from "gsap";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
-import { PerspectiveCamera } from "@react-three/drei";
+import { PerspectiveCamera } from "three";
 
 interface CamerControlProps {
   fov: number;

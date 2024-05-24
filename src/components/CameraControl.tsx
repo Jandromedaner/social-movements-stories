@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useThree } from "@react-three/fiber";
 import { gsap } from "gsap";
 import { OrbitControls } from "@react-three/drei";
-import { PerspectiveCamera } from "three";
+import { PerspectiveCamera, Vector3 } from "three";
 
 interface CamerControlProps {
   fov: number;
@@ -21,11 +21,6 @@ const CameraControl: React.FC<CamerControlProps> = ({
   const { camera, gl } = useThree();
 
   useEffect(() => {
-    if ((camera as PerspectiveCamera).isPerspectiveCamera) {
-      (camera as PerspectiveCamera).fov = fov;
-      camera.updateProjectionMatrix();
-    }
-
     if (targetPosition && isAnimating) {
       console.log("Starting Animation to:", targetPosition);
       setIsAnimating(true);
@@ -40,10 +35,10 @@ const CameraControl: React.FC<CamerControlProps> = ({
           setIsAnimating(true);
         },
         onUpdate: () => {
-          camera.lookAt(0, 0, 0);
-          if (gl.orbitControls) {
-            gl.orbitControls.update();
-          }
+          camera.lookAt(
+            new Vector3(targetPosition.x, targetPosition.y, targetPosition.z),
+          );
+          camera.updateProjectionMatrix();
         },
         onComplete: () => {
           console.log("Animation Complete");
@@ -52,6 +47,15 @@ const CameraControl: React.FC<CamerControlProps> = ({
       });
     }
   }, [camera, targetPosition, fov, isAnimating, setIsAnimating, gl]);
+
+  useEffect(() => {
+    if ((camera as PerspectiveCamera).isPerspectiveCamera) {
+      (camera as PerspectiveCamera).fov = fov;
+      camera.updateProjectionMatrix();
+    } else {
+      console.error("Camera is not a PerspectiveCamera or is undefined");
+    }
+  });
 
   return (
     <OrbitControls

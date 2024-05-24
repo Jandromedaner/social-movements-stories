@@ -7,12 +7,13 @@ const GlowMesh = () => {
   const meshRef = useRef();
   const material = new THREE.ShaderMaterial({
     uniforms: {
-      color1: { value: new THREE.Color(0x67b8ff) },
-      color2: { value: new THREE.Color(0x000000) },
+      // color1: { value: new THREE.Color(0x67b8ff) },
+      // color2: { value: new THREE.Color(0x000000) },
       fresnelBias: { value: 0.1 },
-      fresnelScale: { value: 1.0 },
-      fresnelPower: { value: 4.0 },
+      fresnelScale: { value: 0.5 },
+      fresnelPower: { value: 2.0 },
       viewVector: { value: camera.position },
+      glowColor: { value: new THREE.Color(0x00aaff) },
     },
     vertexShader: `
             uniform vec3 viewVector;
@@ -30,14 +31,14 @@ const GlowMesh = () => {
             }
         `,
     fragmentShader: `
-            uniform vec3 color1;
-            uniform vec3 color2;
+            uniform vec3 glowColor;
             varying float vReflectionFactor;
             void main() {
-                gl_FragColor = vec4(mix(color2, color1, vReflectionFactor), 1.0);
+                gl_FragColor = vec4(glowColor, 1.0) * vReflectionFactor;
             }
         `,
     blending: THREE.AdditiveBlending,
+    side: THREE.FrontSide,
     depthTest: false,
     transparent: true,
   });
@@ -49,8 +50,8 @@ const GlowMesh = () => {
   });
 
   return (
-    <mesh>
-      <sphereGeometry args={[1.1, 64, 64]} />{" "}
+    <mesh scale={[2, 2, 2]}>
+      <sphereGeometry args={[1.03, 32, 32]} />{" "}
       {/* Slightly larger than the Earth */}
       <primitive attach="material" object={material} />
     </mesh>

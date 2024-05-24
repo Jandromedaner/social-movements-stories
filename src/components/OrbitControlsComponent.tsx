@@ -1,17 +1,18 @@
 import { OrbitControls } from "@react-three/drei";
 
 const OrbitControlsComponent = ({
+  isAnimating = false,
   enablePan = false,
   enableZoom = false,
-  enableRotate = true,
 }) => {
   // The enablePan prop can be passed to the component to control panning.
   // By default, it's set to false to disable panning.
   return (
     <OrbitControls
+      enabled={!isAnimating}
       enablePan={enablePan}
       enableZoom={enableZoom}
-      enableRotate={enableRotate}
+      enableRotate={!isAnimating}
     />
   );
 };

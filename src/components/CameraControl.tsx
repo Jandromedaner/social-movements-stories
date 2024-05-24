@@ -21,9 +21,10 @@ const CameraControl: React.FC<CamerControlProps> = ({
   const { camera, gl } = useThree();
 
   useEffect(() => {
-  if ((camera as PerspectiveCamera).isPerspectiveCamera) {
-    (camera as PerspectiveCamera).fov = fov;
-    camera.updateProjectionMatrix();
+    if ((camera as PerspectiveCamera).isPerspectiveCamera) {
+      (camera as PerspectiveCamera).fov = fov;
+      camera.updateProjectionMatrix();
+    }
 
     if (targetPosition && isAnimating) {
       console.log("Starting Animation to:", targetPosition);

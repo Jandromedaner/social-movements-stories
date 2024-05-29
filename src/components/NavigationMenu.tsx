@@ -1,6 +1,10 @@
 import React from "react";
 
-const NavigationMenu = ({ onNavigate }) => (
+interface NavigationMenuProps {
+  onNavigate: (page: string) => void;
+}
+
+const NavigationMenu: React.FC<NavigationMenuProps> = ({ onNavigate }) => (
   <div className="navigation-menu">
     <button onClick={() => onNavigate("home")}>Home</button>
     <button onClick={() => onNavigate("about")}>About</button>

@@ -1,6 +1,15 @@
 import * as THREE from "three";
 
-const initMaterial = () => {
+interface Uniforms {
+  color1: { value: THREE.Color };
+  color2: { value: THREE.Color };
+  fresnelBias: { value: number };
+  fresnelScale: { value: number };
+  fresnelPower: { value: number };
+  viewVector: { value: THREE.Vector3 };
+}
+
+const initMaterial = (): THREE.ShaderMaterial => {
   const uniforms = {
     color1: { value: new THREE.Color(0x67b8ff) },
     color2: { value: new THREE.Color(0x000000) },

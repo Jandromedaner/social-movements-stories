@@ -1,6 +1,12 @@
 import { OrbitControls } from "@react-three/drei";
 
-const OrbitControlsComponent = ({
+interface OrbitControlsComponentProps {
+  isAnimating?: boolean;
+  enablePan?: boolean;
+  enableZoom?: boolean;
+}
+
+const OrbitControlsComponent: React.FC<OrbitControlsComponentProps> = ({
   isAnimating = false,
   enablePan = false,
   enableZoom = false,

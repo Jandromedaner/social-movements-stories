@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useLoader } from "@react-three/fiber";
 import * as THREE from "three";
 
-const Earth = () => {
+const Earth: React.FC = () => {
   const texturesLoaded = useLoader(THREE.TextureLoader, [
     "/img/00_earthmap8k.jpg",
     "/img/01_earthbump1k.jpg",

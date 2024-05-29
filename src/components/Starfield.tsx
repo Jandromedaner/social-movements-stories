@@ -2,7 +2,7 @@ import React from "react";
 import { useLoader } from "@react-three/fiber";
 import * as THREE from "three";
 
-const Starfield = () => {
+const Starfield: React.FC = () => {
   const texture = useLoader(THREE.TextureLoader, "/img/stars/circle.png");
   const starsGeometry = new THREE.BufferGeometry();
   const starsMaterials = [];

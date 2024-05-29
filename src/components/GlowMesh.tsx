@@ -8,7 +8,7 @@ import {
   FrontSide,
 } from "three";
 
-const GlowMesh = () => {
+const GlowMesh: React.FC = () => {
   const { camera } = useThree();
   const meshRef = useRef<Mesh>(null);
   const material = new ShaderMaterial({

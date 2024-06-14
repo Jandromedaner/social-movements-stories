@@ -19,6 +19,15 @@ interface TargetPosition {
   z: number;
 }
 
+interface Milestone {
+  title: string;
+  description: string;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
+}
+
 const ThreeScene: React.FC = () => {
   const [targetPosition, setTargetPosition] = useState<TargetPosition | null>(
     null,
@@ -55,11 +64,7 @@ const ThreeScene: React.FC = () => {
     setShowPopup(true);
   };
 
-  const handleMilestoneClick = (milestone: {
-    coordinates: { lat: number; lng: number };
-    title: string;
-    content: string;
-  }) => {
+  const handleMilestoneClick = (milestone: Milestone) => {
     console.log("Milestone clicked:", milestone.title);
     handleCameraMove(
       milestone.coordinates.lat,

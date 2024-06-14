@@ -12,6 +12,7 @@ import Starfield from "./Starfield";
 import CameraControl from "./CameraControl";
 import Popup from "./Popup";
 import CivilRightsMilestones from "./CivilRightsMilestones";
+import { Analytics } from "@vercel/analytics/react";
 
 interface TargetPosition {
   x: number;
@@ -77,6 +78,7 @@ const ThreeScene: React.FC = () => {
 
   return (
     <div className="three-scene">
+      <Analytics />
       <Popup
         isVisible={showPopup}
         onClose={handleClosePopup}

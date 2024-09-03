@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useLoader } from "@react-three/fiber";
 import * as THREE from "three";
 
-const Earth: React.FC = () => {
+const Earth: React.FC = ({ selectedMilestone }) => {
   const texturesLoaded = useLoader(THREE.TextureLoader, [
     "/img/00_earthmap8k.jpg",
     "/img/01_earthbump1k.jpg",
@@ -10,6 +10,20 @@ const Earth: React.FC = () => {
     "/img/03_earthlights8k.jpg",
     "/img/EARTH_DISPLACE_42K_16BITS_preview.jpg",
   ]);
+
+  const milestonePosition = useMemo(() => {
+    if (selectedMilestone) {
+      // Convert milestone's lat/long to 3D position
+      // This is a placeholder calculation and should be replaced with actual conversion
+      const lat = selectedMilestone.latitude * (Math.PI / 180);
+      const long = selectedMilestone.longitude * (Math.PI / 180);
+      const x = Math.cos(lat) * Math.sin(long);
+      const y = Math.sin(lat);
+      const z = Math.cos(lat) * Math.cos(long);
+      return [x, y, z];
+    }
+    return null;
+  }, [selectedMilestone]);
 
   const materialProps = useMemo(() => {
     return {
@@ -36,10 +50,18 @@ const Earth: React.FC = () => {
   );
 
   return (
-    <mesh scale={[2, 2, 2]}>
-      <sphereGeometry args={[1, 64, 64]} />
-      <meshStandardMaterial {...materialProps} />
-    </mesh>
+    <group>
+      <mesh scale={[2, 2, 2]}>
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshStandardMaterial {...materialProps} />
+      </mesh>
+      {milestonePosition && (
+        <mesh position={milestonePosition}>
+          <sphereGeometry args={[0.02, 16, 16]} />
+          <meshBasicMaterial color="red" />
+        </mesh>
+      )}
+    </group>
   );
 };
 

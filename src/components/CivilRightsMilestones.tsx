@@ -113,15 +113,17 @@ const CivilRightsMilestones: React.FC<CivilRightsMilestonesProps> = ({
 
   const handleNext = () => {
     if (currentIndex < milestones.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      onMilestoneClick(milestones[currentIndex + 1]);
+      const newIndex = currentIndex + 1;
+      setCurrentIndex(newIndex);
+      onMilestoneClick(milestones[newIndex]);
     }
   };
 
   const handlePrevious = () => {
     if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-      onMilestoneClick(milestones[currentIndex - 1]);
+      const newIndex = currentIndex - 1;
+      setCurrentIndex(newIndex);
+      onMilestoneClick(milestones[newIndex]);
     }
   };
 
@@ -132,17 +134,19 @@ const CivilRightsMilestones: React.FC<CivilRightsMilestonesProps> = ({
       <div className="milestone">
         <div className="milestone-nav">
           <button onClick={handlePrevious} disabled={currentIndex === 0}>
-            &larr;
+            Previous;
           </button>
-          <h4>{currentMilestone.title}</h4>
           <button
             onClick={handleNext}
             disabled={currentIndex === milestones.length - 1}
           >
-            &rarr;
+            Next;
           </button>
         </div>
-        <p>{currentMilestone.description}</p>
+        <div className="milestone-content">
+          <h2>{currentMilestone.title}</h2>
+          <p>{currentMilestone.description}</p>
+        </div>
       </div>
     </div>
   );

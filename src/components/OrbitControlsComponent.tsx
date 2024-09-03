@@ -1,4 +1,6 @@
 import { OrbitControls } from "@react-three/drei";
+import { extend } from "@react-three/fiber";
+extend({ OrbitControls });
 
 interface OrbitControlsComponentProps {
   isAnimating?: boolean;

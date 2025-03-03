@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 
 interface Milestone {
   title: string;
@@ -127,26 +127,23 @@ const CivilRightsMilestones: React.FC<CivilRightsMilestonesProps> = ({
     }
   };
 
-  const currentMilestone = milestones[currentIndex];
-
   return (
-    <div className="milestones" id="milestones">
-      <div className="milestone">
-        <div className="milestone-nav">
-          <button onClick={handlePrevious} disabled={currentIndex === 0}>
-            Previous;
-          </button>
-          <button
-            onClick={handleNext}
-            disabled={currentIndex === milestones.length - 1}
-          >
-            Next;
-          </button>
-        </div>
-        <div className="milestone-content">
-          <h2>{currentMilestone.title}</h2>
-          <p>{currentMilestone.description}</p>
-        </div>
+    <div className="absolute bottom-0 left-0 right-0 z-10 p-4 flex justify-center pointer-events-none">
+      <div className="shadow-lg flex flex-row pointer-events-auto bg-red-500 p-4 rounded">
+        <button
+          onClick={handlePrevious}
+          disabled={currentIndex === 0}
+          className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 transition-colors disabled:opacity-50 mr-4"
+        >
+          Previous
+        </button>
+        <button
+          onClick={handleNext}
+          disabled={currentIndex === milestones.length - 1}
+          className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 transition-colors disabled:opacity-50"
+        >
+          Next
+        </button>
       </div>
     </div>
   );

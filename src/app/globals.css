@@ -82,7 +82,6 @@ button {
 
 .milestone-nav {
     display: flex;
-    align-items: center;
     justify-content: space-between;
     width: 100%;
     padding: 0 10px;
@@ -113,8 +112,6 @@ button {
 
 .popup {
     position: fixed;
-    left: 0;
-    top: 0;
     width: 300px;
     height: 100%;
     background: white;
@@ -126,6 +123,11 @@ button {
     z-index: 10;
 }
 
+.popup-title {
+    position: relative;
+    color: black;
+}
+
 .popup-content {
     position: relative;
     color: black;
@@ -133,25 +135,6 @@ button {
 
 .popup.visible {
     transform: translateX(0);
-}
-
-.close-button {
-    position: relative;
-    left: 240px;
-    top: 0px;
-    background: none;
-    color: black;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 0;
-    line-height: 1;
-    width: 20px;
-    height: 20px;
-}
-
-.close-button:hover {
-    color: grey;
 }
 
 .canvas-container {

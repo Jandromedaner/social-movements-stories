@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
+import Link from "next/link";
 import { Canvas } from "@react-three/fiber";
 import Background from "./Background";
 import Earth from "./Earth";
 import Lights from "./Lights";
 import OrbitControlsComponent from "./OrbitControlsComponent";
-// import GlowMesh from "./GlowMesh";
 import Clouds from "./Clouds";
 import Starfield from "./Starfield";
 import CameraControl from "./CameraControl";
@@ -36,10 +36,10 @@ const ThreeScene: React.FC = () => {
   );
   const [showPopup, setShowPopup] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [popupTitle, setPopupTitle] = useState("");
-  const [popupContent, setPopupContent] = useState("");
   const [showLanding, setShowLanding] = useState(true);
-  const [selectedMilestone, setSelectedMilestone] = useState(null);
+  const [selectedMilestone, setSelectedMilestone] = useState<Milestone | null>(
+    null,
+  );
 
   const handleExplore = useCallback(() => {
     setShowLanding(false);
@@ -67,12 +67,15 @@ const ThreeScene: React.FC = () => {
     const y = alt * Math.cos(phi);
     const z = alt * Math.sin(phi) * Math.sin(theta);
     setTargetPosition({ x, y, z });
-    setPopupTitle(title);
-    setPopupContent(content);
+    setSelectedMilestone({
+      title,
+      description: content,
+      coordinates: { lat, lng: lon },
+    });
     setShowPopup(true);
   };
 
-  const handleMilestoneClick = useCallback((milestone) => {
+  const handleMilestoneClick = useCallback((milestone: Milestone) => {
     setSelectedMilestone(milestone);
     console.log("Milestone clicked:", milestone.title);
     handleCameraMove(
@@ -85,58 +88,64 @@ const ThreeScene: React.FC = () => {
   }, []);
 
   return (
-    // <div className="three-scene">
-    <div className="relative w-full h-screen">
-      {showLanding && (
-        <div className="absolute inset-0 z-10">
-          <LandingPage onExplore={handleExplore} />
-        </div>
-      )}
+    <div className="relative h-screen overflow-hidden">
+      <header className="absolute top-0 left-0 w-full z-20 p-4">
+        <nav className="flex justify-between items-center">
+          <Link legacyBehavior href="/about" passHref>
+            <a className="text-white hover:text-blue-200">About</a>
+          </Link>
+          <Link legacyBehavior href="/contact" passHref>
+            <a className="text-white hover:text-blue-200">Contact</a>
+          </Link>
+        </nav>
+      </header>
 
-      <Analytics />
-      <Popup
-        isVisible={showPopup}
-        onClose={handleClosePopup}
-        title={popupTitle}
-        content={popupContent}
-      />
+      <div className="relative w-full h-full">
+        {showLanding && (
+          <div className="absolute inset-0 z-10">
+            <LandingPage onExplore={handleExplore} />
+          </div>
+        )}
 
-      {selectedMilestone && (
-        <div className="absolute top-4 right-4 z-20 p-4 bg-white rounded-lg shadow-lg max-w-sm">
-          <button
-            onClick={handleClosePopup}
-            className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-          >
-            X
-          </button>
-          <h3 className="text-lg font-bold text-gray-800 mb-2">
-            {selectedMilestone.title}
-          </h3>
-          <p className="text-gray-600">{selectedMilestone.description}</p>
-        </div>
-      )}
+        <Analytics />
 
-      <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
-        <OrbitControlsComponent isAnimating={isAnimating} />
-        <Lights />
-        <Earth />
-        <Clouds />
-        <CameraControl
-          fov={50}
-          targetPosition={targetPosition}
-          isAnimating={isAnimating}
-          setIsAnimating={setIsAnimating}
-        />
-        {/* <Markers /> */}
-        <Background />
-        {/* <GlowMesh /> */}
-        <Starfield />
-        {/* <NavigationMenu onNavigate={handleNavigate} /> */}
-      </Canvas>
-      {/* <NavigationMenu onNavigate={handleCameraMove} /> */}
-      {/* <button onClick={() => handleCameraMove(44.2601, -72.5754, 5)}>
-        Go to Civil Rights Movement in the United States:
-      </button> */}
+        {!showLanding && (
+          <div className="relative w-full h-full">
+            <Canvas
+              camera={{ position: [0, 0, 5], fov: 50 }}
+              className="absolute inset-0 z-0"
+              style={{ touchAction: "auto" }}
+            >
+              <OrbitControlsComponent isAnimating={isAnimating} />
+              <Lights />
+              <Earth />
+              <Clouds />
+              <CameraControl
+                fov={50}
+                targetPosition={targetPosition}
+                isAnimating={isAnimating}
+                setIsAnimating={setIsAnimating}
+              />
+              <Background />
+              <Starfield />
+            </Canvas>
+            <CivilRightsMilestones onMilestoneClick={handleMilestoneClick} />
+          </div>
+        )}
+
+        {selectedMilestone && showPopup && (
+          <Popup
+            isVisible={showPopup}
+            onClose={handleClosePopup}
+            title={selectedMilestone.title}
+            content={selectedMilestone.description}
+          />
+        )}
+        {/* <h3 className="text-lg font-bold text-gray-800 mb-2">
+              {selectedMilestone.title}
+            </h3>
+            <p className="text-gray-600">{selectedMilestone.description}</p> */}
+      </div>
     </div>
   );
 };
